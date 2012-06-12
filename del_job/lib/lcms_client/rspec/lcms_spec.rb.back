@@ -1,0 +1,36 @@
+require '../room_type'
+require '../amenity'
+
+describe RoomType do
+   before(:each) do
+      @rc = LCMS::RequestContext.new("1.0","epc","746777")
+      @rtn =RoomType.new
+   end
+   it "should be able to get the right room" do
+      resp = @rtn.room_type_get(@rc, 2203502)
+      resp.to_hash[:room_type_get_rs][:room_type_content][:name_list][:name][2][:value].should eql "Room South"
+   end
+end
+
+describe Amenity do
+   before(:each) do
+      @rc = LCMS::RequestContext.new("1.0","epc","746777")
+      @amenity = Amenity.new
+      @ui = UpdaterInfo.new("SCORE","a-amallya")
+      @ac = AttributeCreate.new(@ui)
+   end
+   it "should be able to return the amenities corresponding to a hotel id" do
+      resp = @amenity.amenity_get(@rc,1,5) 
+      puts resp
+   end
+
+   it "should return the values for a given amenity" do
+      resp = amenity.amenity_value_get(@rc,2020,9,2057) 
+      puts resp
+   end
+
+   it "should be able to create an amenity" do
+      resp = amenity.amenity_create(@rc,@ac,143,9) 
+      puts resp
+   end
+end

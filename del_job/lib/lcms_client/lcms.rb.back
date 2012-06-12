@@ -1,0 +1,47 @@
+#Requires Ruby version 1.8.5 or highet
+require 'rubygems'
+require 'savon'
+
+module LCMS
+   DOCUMENT_URL = "http://chellssapptst60.karmalab.net:52450/lcms/services/lodgingcontentmaster.wsdl"
+   SERVICE_ENDPOINT = "http://chellssapptst60.karmalab.net:52450/lcms/services"
+
+   class RequestContext
+      def initialize(version, user_code, request_id)
+         @version = version
+         @user_code = user_code
+         @request_id = request_id
+      end
+
+      def to_s
+          "<ins0:Version>#{@version}</ins0:Version><ins0:UserCode>#{@user_code}</ins0:UserCode><ins0:RequestID>#{@request_id}</ins0:RequestID>"
+      end
+   end
+
+   class LCMSBase
+      def initialize
+         @client = Savon::Client.new do
+            wsdl.document = DOCUMENT_URL
+            wsdl.endpoint = SERVICE_ENDPOINT   
+         end
+      end
+   end
+end
+
+#rc = LCMS::RequestContext.new("1.0","epc","746777")
+
+#para = LCMS::RoomType.new
+
+#resp = para.paragraph_get(rc, 1, 2, 3084, 1)
+
+#resp = para.property_content_get(rc, 74)
+
+#rtn = LCMS::RoomType.new
+#resp = rtn.room_type_get(rc, 2203502)
+
+#amenity = LCMS::Amenity.new
+#resp = amenity.attribute_get(rc,325,8) 
+
+
+#amenity = LCMS::Amenity.new
+#resp = amenity.attribute_value_get(rc,2150,1386565,"1033") 
